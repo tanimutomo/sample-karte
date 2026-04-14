@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Users, Building2, PanelLeftClose, PanelLeft } from "lucide-react";
+import { Users, Building2, ScrollText, PanelLeftClose, PanelLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "./sidebar-context";
 import {
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { label: "患者一覧", href: "/patients", icon: Users },
   { label: "病棟管理", href: "/wards", icon: Building2 },
+  { label: "指示簿管理", href: "/instructions", icon: ScrollText },
 ];
 
 function NavLinks({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?: () => void }) {
