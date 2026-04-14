@@ -1,6 +1,5 @@
-import { AppHeader } from "@/components/layout/header";
 import { SidebarProvider } from "@/components/layout/sidebar-context";
-import { Sidebar } from "@/components/layout/sidebar";
+import { Sidebar, MobileTopBar } from "@/components/layout/sidebar";
 
 export default function AuthenticatedLayout({
   children,
@@ -12,7 +11,7 @@ export default function AuthenticatedLayout({
       <div className="flex min-h-screen">
         <Sidebar />
         <div className="flex flex-col flex-1 min-w-0">
-          <AppHeader />
+          <MobileTopBar />
           <main className="flex-1">{children}</main>
         </div>
       </div>
