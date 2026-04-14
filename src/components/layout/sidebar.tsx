@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Users, Building2, ScrollText, PanelLeftClose, PanelLeft } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Users, Building2, ScrollText, PanelLeftClose, PanelLeft, FileHeart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSidebar } from "./sidebar-context";
 import {
@@ -18,6 +18,19 @@ const navItems = [
   { label: "病棟管理", href: "/wards", icon: Building2 },
   { label: "指示簿管理", href: "/instructions", icon: ScrollText },
 ];
+
+function Logo({ collapsed }: { collapsed?: boolean }) {
+  const router = useRouter();
+  return (
+    <button
+      onClick={() => router.push("/patients")}
+      className="flex items-center gap-2 px-3 py-3 font-semibold text-lg hover:opacity-80 transition-opacity"
+    >
+      <FileHeart className="h-6 w-6 text-primary shrink-0" />
+      {!collapsed && <span>電子カルテ</span>}
+    </button>
+  );
+}
 
 function NavLinks({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?: () => void }) {
   const pathname = usePathname();
@@ -53,14 +66,17 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Desktop sidebar */}
+      {/* Desktop sidebar - sticky fixed */}
       <aside
         className={cn(
-          "hidden md:flex flex-col border-r bg-background shrink-0 transition-[width] duration-200",
+          "hidden md:flex flex-col border-r bg-background shrink-0 sticky top-0 h-screen transition-[width] duration-200",
           collapsed ? "w-14" : "w-56"
         )}
       >
-        <div className="flex-1 pt-2">
+        <div className="border-b">
+          <Logo collapsed={collapsed} />
+        </div>
+        <div className="flex-1 pt-2 overflow-y-auto">
           <NavLinks collapsed={collapsed} />
         </div>
         <div className="p-2 border-t">
@@ -86,9 +102,10 @@ export function Sidebar() {
           <SheetDescription className="sr-only">
             サイドバーナビゲーション
           </SheetDescription>
-          <div className="pt-12">
-            <NavLinks onNavigate={() => setOpen(false)} />
+          <div className="border-b">
+            <Logo />
           </div>
+          <NavLinks onNavigate={() => setOpen(false)} />
         </SheetContent>
       </Sheet>
     </>

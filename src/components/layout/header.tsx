@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { LogOut, FileHeart, Menu } from "lucide-react";
+import { LogOut, Menu, FileHeart } from "lucide-react";
 import { useSidebar } from "./sidebar-context";
 
 export function AppHeader() {
@@ -29,9 +29,10 @@ export function AppHeader() {
           <Menu className="h-5 w-5" />
           <span className="sr-only">メニューを開く</span>
         </Button>
+        {/* モバイル用ロゴ（サイドバーが非表示の時のみ） */}
         <button
           onClick={() => router.push("/patients")}
-          className="flex items-center gap-2 font-semibold text-lg hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 font-semibold text-lg hover:opacity-80 transition-opacity md:hidden"
         >
           <FileHeart className="h-6 w-6 text-primary" />
           <span>電子カルテ</span>
