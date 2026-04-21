@@ -29,12 +29,14 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
+  // セッションのリフレッシュのみ行う（軽量化）
+  // getUser()はSupabase APIを呼ぶため504の原因になりうる
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
 
   if (
-    !user &&
+    !session &&
     !request.nextUrl.pathname.startsWith("/login") &&
     !request.nextUrl.pathname.startsWith("/auth")
   ) {
