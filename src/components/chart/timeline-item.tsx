@@ -13,6 +13,14 @@ import type {
 } from "@/lib/types/database";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
 import {
@@ -217,14 +225,29 @@ function OrderContent({
 
 function DocumentContent({ data }: { data: Document }) {
   return (
-    <div className="text-sm space-y-1">
-      <Badge variant="outline">{documentTypeLabel[data.document_type]}</Badge>
+    <div className="text-sm space-y-2">
+      <div className="flex items-center gap-2">
+        <Badge variant="outline">{documentTypeLabel[data.document_type]}</Badge>
+        {data.content && (
+          <Dialog>
+            <DialogTrigger
+              render={
+                <Button variant="outline" size="sm" className="h-7">
+                  <FileCheck className="h-3.5 w-3.5" />
+                  文書を見る
+                </Button>
+              }
+            />
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>{data.title}</DialogTitle>
+              </DialogHeader>
+              <div className="text-sm whitespace-pre-wrap">{data.content}</div>
+            </DialogContent>
+          </Dialog>
+        )}
+      </div>
       <div className="font-medium">{data.title}</div>
-      {data.content && (
-        <div className="text-muted-foreground whitespace-pre-wrap line-clamp-5">
-          {data.content}
-        </div>
-      )}
     </div>
   );
 }
